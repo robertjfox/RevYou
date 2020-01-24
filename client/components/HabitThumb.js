@@ -26,7 +26,6 @@ export const HabitThumb = props => {
         <img src={'/' + habit.imgPath} />
       </Link>
       <RatingType />
-      <h3>{habit.name}</h3>
     </div>
   )
 }

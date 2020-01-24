@@ -10,7 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <nav id="navBar">
         <img src="/icons/settings.png" className="navIcons" />
         <Link to="/home">
-          <h2>RevYou</h2>
+          <h1 id="placeholderLogoText">RevYou</h1>
         </Link>
         <img src="/icons/userProfile.png" className="navIcons" />
       </nav>

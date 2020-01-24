@@ -4,26 +4,31 @@ import {connect} from 'react-redux'
 import {HabitThumb, MakeHabitModal} from './'
 
 export const UserHome = props => {
-  const {email, habits} = props
+  const {firstName, email, habits} = props
 
   return (
     <div id="userHome">
-      <h2>Welcome back, {email}</h2>
+      <h2 className="homePageWelcome">Welcome back, {firstName}</h2>
       <div id="homepageDaySelector">
-        <button>Previous</button>
+        <button>PREV</button>
         <h2>01-23-2020</h2>
-        <button>Next</button>
+        <button>NEXT</button>
       </div>
-      {habits.map(habit => {
-        return <HabitThumb key={habit.id} habit={habit} />
-      })}
-      <MakeHabitModal />
+      <div>
+        {habits.map(habit => {
+          return <HabitThumb key={habit.id} habit={habit} />
+        })}
+      </div>
+      <div id="makeHabitCont">
+        <MakeHabitModal />
+      </div>
     </div>
   )
 }
 
 const mapState = state => {
   return {
+    firstName: state.user.firstName,
     email: state.user.email,
     habits: state.habits
   }
@@ -32,6 +37,7 @@ const mapState = state => {
 export default connect(mapState)(UserHome)
 
 UserHome.propTypes = {
+  fistName: PropTypes.string,
   email: PropTypes.string,
   habits: PropTypes.array
 }

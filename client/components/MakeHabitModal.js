@@ -9,7 +9,8 @@ const customStyles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '200px',
+    backgroundImage:
+      'linear-gradient(to bottom right, rgb(29, 29, 108),rgb(3, 3, 36)',
     top: '50%',
     left: '50%',
     right: 'auto',

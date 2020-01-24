@@ -17,22 +17,11 @@ class SingleHabit extends Component {
     return (
       <div id="singleHabit">
         <div id="singleHabitTop">
-          <img src={`/${singleHabit.imgPath}`} />
+          {/* <img src={`/${singleHabit.imgPath}`} /> */}
           <h1>{singleHabit.name}</h1>
         </div>
-        <div id="singleHabitEntries">
-          {entries &&
-            entries.map(entry => {
-              return (
-                <div key={entry.id}>
-                  <h3>
-                    {entry.createdAt.slice(0, 10)}: {entry.value}
-                  </h3>
-                </div>
-              )
-            })}
-        </div>
         <div id="singleHabitAnalysis">
+          <h2>Past 30 Days:</h2>
           <CalendarHeatmap
             startDate={new Date('2016-01-01')}
             endDate={new Date('2016-02-04')}
@@ -41,6 +30,12 @@ class SingleHabit extends Component {
               {date: '2016-01-02', count: 1},
               {date: '2016-01-04', count: 3},
               {date: '2016-01-10', count: 4},
+              {date: '2016-01-12', count: 3},
+              {date: '2016-01-15', count: 1},
+              {date: '2016-01-16', count: 3},
+              {date: '2016-01-22', count: 2},
+              {date: '2016-01-23', count: 3},
+              {date: '2016-01-27', count: 1},
               {date: '2016-01-30', count: 2}
             ]}
             classForValue={value => {
@@ -53,7 +48,7 @@ class SingleHabit extends Component {
         </div>
         <div id="singleHabitBottom">
           <button type="button" onClick={() => deleteHabit(habitId)}>
-            DELETE HABIT
+            Delete Habit
           </button>
         </div>
       </div>

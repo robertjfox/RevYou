@@ -252,7 +252,7 @@ var HabitThumb = function HabitThumb(props) {
     to: "/singleHabit/".concat(habit.id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: '/' + habit.imgPath
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, habit.name));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, null));
 };
 /* harmony default export */ __webpack_exports__["default"] = (HabitThumb);
 HabitThumb.propTypes = {
@@ -308,7 +308,7 @@ var customStyles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '200px',
+    backgroundImage: 'linear-gradient(to bottom right, rgb(29, 29, 108),rgb(3, 3, 36)',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -485,7 +485,9 @@ var Navbar = function Navbar(_ref) {
     className: "navIcons"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/home"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "RevYou")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    id: "placeholderLogoText"
+  }, "RevYou")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: "/icons/userProfile.png",
     className: "navIcons"
   })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -584,18 +586,73 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_star_rating_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-star-rating-component */ "./node_modules/react-star-rating-component/index.js");
 /* harmony import */ var react_star_rating_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_star_rating_component__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
-var FiveStars = function FiveStars(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "fiveStars"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_star_rating_component__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    name: "rate1",
-    starCount: 5,
-    value: 0
-  }));
-};
+
+var FiveStars =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(FiveStars, _Component);
+
+  function FiveStars() {
+    var _this;
+
+    _classCallCheck(this, FiveStars);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(FiveStars).call(this));
+    _this.state = {
+      rating: 0
+    };
+    return _this;
+  }
+
+  _createClass(FiveStars, [{
+    key: "onStarClick",
+    value: function onStarClick(nextValue, prevValue, name) {
+      this.setState({
+        rating: nextValue
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var rating = this.state.rating;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_star_rating_component__WEBPACK_IMPORTED_MODULE_1___default.a, {
+        name: "rate1",
+        starCount: 5,
+        value: rating,
+        emptyStarColor: "white",
+        starColor: "rgb(235, 156, 71)",
+        renderStarIcon: function renderStarIcon() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "fiveStarsCharacter"
+          }, "\u2605");
+        },
+        onStarClick: this.onStarClick.bind(this)
+      }));
+    }
+  }]);
+
+  return FiveStars;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (FiveStars);
 
@@ -671,17 +728,9 @@ function (_Component) {
         id: "singleHabit"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabitTop"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "/".concat(singleHabit.imgPath)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, singleHabit.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "singleHabitEntries"
-      }, entries && entries.map(function (entry) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: entry.id
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, entry.createdAt.slice(0, 10), ": ", entry.value));
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, singleHabit.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabitAnalysis"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_calendar_heatmap__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Past 30 Days:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_calendar_heatmap__WEBPACK_IMPORTED_MODULE_4___default.a, {
         startDate: new Date('2016-01-01'),
         endDate: new Date('2016-02-04'),
         showMonthLabels: false,
@@ -694,6 +743,24 @@ function (_Component) {
         }, {
           date: '2016-01-10',
           count: 4
+        }, {
+          date: '2016-01-12',
+          count: 3
+        }, {
+          date: '2016-01-15',
+          count: 1
+        }, {
+          date: '2016-01-16',
+          count: 3
+        }, {
+          date: '2016-01-22',
+          count: 2
+        }, {
+          date: '2016-01-23',
+          count: 3
+        }, {
+          date: '2016-01-27',
+          count: 1
         }, {
           date: '2016-01-30',
           count: 2
@@ -712,7 +779,7 @@ function (_Component) {
         onClick: function onClick() {
           return deleteHabit(habitId);
         }
-      }, "DELETE HABIT")));
+      }, "Delete Habit")));
     }
   }]);
 
@@ -766,22 +833,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var UserHome = function UserHome(props) {
-  var email = props.email,
+  var firstName = props.firstName,
+      email = props.email,
       habits = props.habits;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "userHome"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Welcome back, ", email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "homePageWelcome"
+  }, "Welcome back, ", firstName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "homepageDaySelector"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Previous"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01-23-2020"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Next")), habits.map(function (habit) {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "PREV"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01-23-2020"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "NEXT")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, habits.map(function (habit) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["HabitThumb"], {
       key: habit.id,
       habit: habit
     });
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["MakeHabitModal"], null));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "makeHabitCont"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["MakeHabitModal"], null)));
 };
 
 var mapState = function mapState(state) {
   return {
+    firstName: state.user.firstName,
     email: state.user.email,
     habits: state.habits
   };
@@ -789,6 +862,7 @@ var mapState = function mapState(state) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
 UserHome.propTypes = {
+  fistName: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   email: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   habits: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
 };

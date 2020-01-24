@@ -1,18 +1,34 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Habit, Entry} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'cody@email.com', password: '123'})
+  ])
+
+  const habits = await Promise.all([
+    Habit.create({name: 'Excercise', ratingType: 'Binary', userId: 1}),
+    Habit.create({name: 'Eat Healthy', ratingType: 'FiveStars', userId: 1}),
+    Habit.create({name: 'Drink Less Soda', ratingType: 'Counter', userId: 1})
+  ])
+
+  const entries = await Promise.all([
+    Entry.create({habitId: 1, value: 1, userId: 1}),
+    Entry.create({habitId: 2, value: 1, userId: 1}),
+    Entry.create({habitId: 3, value: 3, userId: 1}),
+    Entry.create({habitId: 3, value: 1, userId: 1, createdAt: '2020-01-22'}),
+    Entry.create({habitId: 3, value: 5, userId: 1, createdAt: '2020-01-21'}),
+    Entry.create({habitId: 3, value: 2, userId: 1, createdAt: '2020-01-20'}),
+    Entry.create({habitId: 3, value: 0, userId: 1, createdAt: '2020-01-19'})
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${habits.length} habits`)
   console.log(`seeded successfully`)
 }
 

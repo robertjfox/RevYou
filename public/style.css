@@ -1,9 +1,15 @@
 body {
-  font-family: sans-serif;
+  font-family: Helvetica Narrow, sans-serif;
 }
 
 a {
   text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: lighter;
 }
 
 label {
@@ -18,4 +24,126 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+  height: 10vh;
+  padding: 20px;
+  background: rgb(237, 176, 176);
+}
+
+#userHome {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(179, 216, 179);
+  height: 85vh;
+}
+
+#userHome button {
+  padding: 10px;
+  margin: 10px;
+}
+
+#homepageDaySelector {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80vw;
+  background: rgb(235, 235, 203);
+}
+
+#habitThumb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vw;
+  background: rgb(179, 220, 233);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#habitThumb img {
+  height: 40px;
+  width: 40px;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+}
+
+#singleHabit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90vw;
+  padding: 20px;
+  background: rgb(192, 192, 235);
+}
+
+#singleHabitTop {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 75vw;
+  background: rgb(179, 223, 179);
+}
+
+#singleHabitTop img {
+  height: 60px;
+  width: 60px;
+}
+
+#singleHabitAnalysis {
+  height: 300px;
+  background: pink;
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+}
+
+.navIcons {
+  height: 40px;
+  width: 40px;
+}
+
+.ratingCounter {
+  display: flex;
+  align-items: center;
+}
+
+.ratingBinary input {
+  width: 50px;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 90%;
+}
+
+.react-calendar-heatmap {
+  height: 200px;
+  width: 200px;
+  transform: rotate(90deg);
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #d6e685;
+}
+.react-calendar-heatmap .color-scale-2 {
+  fill: #8cc665;
+}
+.react-calendar-heatmap .color-scale-3 {
+  fill: #44a340;
+}
+.react-calendar-heatmap .color-scale-4 {
+  fill: #1e6823;
+}
+.react-calendar-heatmap .color-empty {
+  fill: #ffffff;
 }

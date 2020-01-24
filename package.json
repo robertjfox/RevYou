@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "revyou",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "a productivity app for creating good habits",
   "engines": {
     "node": ">= 7.0.0"
   },
@@ -41,6 +41,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@nivo/calendar": "^0.61.1",
     "axios": "^0.19.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
@@ -54,9 +55,12 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^16.8.6",
+    "react-modal": "^3.11.1",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
+    "react-star-rating-component": "^1.4.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",

@@ -30,7 +30,7 @@ class MakeHabitModal extends React.Component {
     this.state = {
       modalIsOpen: false,
       name: '',
-      ratingType: ''
+      ratingType: 'Binary'
     }
 
     this.openModal = this.openModal.bind(this)
@@ -67,6 +67,7 @@ class MakeHabitModal extends React.Component {
       name: '',
       ratingType: ''
     })
+    this.closeModal()
   }
 
   render() {

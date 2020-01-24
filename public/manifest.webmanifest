@@ -1,0 +1,22 @@
+{
+  "dir": "ltr",
+  "lang": "ro",
+  "name": "RevYou",
+  "scope": "/",
+  "display": "browser",
+  "start_url": "https://revyoustack.herokuapp.com/",
+  "short_name": "RevYou",
+  "theme_color": "transparent",
+  "description": "",
+  "orientation": "any",
+  "background_color": "transparent",
+  "related_applications": "",
+  "prefer_related_applications": "false",
+  "icons": [
+    {
+      "src": "https://revyoustack.herokuapp.com/favicon.ico",
+      "sizes": "16x16 32x32 48x48"
+    }
+  ],
+  "generated": "true"
+}

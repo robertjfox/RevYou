@@ -14,6 +14,20 @@ class SingleHabit extends Component {
     const {habitId} = this.props.match.params
     const {singleHabit, deleteHabit} = this.props
     const {entries} = singleHabit
+    const values = []
+    if (entries) {
+      entries.forEach(entry =>
+        values.push({
+          date: entry.createdAt.slice(0, 10),
+          count: entry.value
+        })
+      )
+    }
+
+    const today = new Date()
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
     return (
       <div id="singleHabit">
         <div id="singleHabitTop">
@@ -23,21 +37,10 @@ class SingleHabit extends Component {
         <div id="singleHabitAnalysis">
           <h2>Past 30 Days:</h2>
           <CalendarHeatmap
-            startDate={new Date('2016-01-01')}
-            endDate={new Date('2016-02-04')}
+            startDate={thirtyDaysAgo}
+            endDate={today}
             showMonthLabels={false}
-            values={[
-              {date: '2016-01-02', count: 1},
-              {date: '2016-01-04', count: 3},
-              {date: '2016-01-10', count: 4},
-              {date: '2016-01-12', count: 3},
-              {date: '2016-01-15', count: 1},
-              {date: '2016-01-16', count: 3},
-              {date: '2016-01-22', count: 2},
-              {date: '2016-01-23', count: 3},
-              {date: '2016-01-27', count: 1},
-              {date: '2016-01-30', count: 2}
-            ]}
+            values={values}
             classForValue={value => {
               if (!value) {
                 return 'color-empty'

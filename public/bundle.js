@@ -334,7 +334,7 @@ function (_React$Component) {
     _this.state = {
       modalIsOpen: false,
       name: '',
-      ratingType: ''
+      ratingType: 'Binary'
     };
     _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
     _this.afterOpenModal = _this.afterOpenModal.bind(_assertThisInitialized(_this));
@@ -383,6 +383,7 @@ function (_React$Component) {
         name: '',
         ratingType: ''
       });
+      this.closeModal();
     }
   }, {
     key: "render",
@@ -724,6 +725,20 @@ function (_Component) {
           singleHabit = _this$props.singleHabit,
           deleteHabit = _this$props.deleteHabit;
       var entries = singleHabit.entries;
+      var values = [];
+
+      if (entries) {
+        entries.forEach(function (entry) {
+          return values.push({
+            date: entry.createdAt.slice(0, 10),
+            count: entry.value
+          });
+        });
+      }
+
+      var today = new Date();
+      var thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabit"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -731,40 +746,10 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, singleHabit.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabitAnalysis"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Past 30 Days:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_calendar_heatmap__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        startDate: new Date('2016-01-01'),
-        endDate: new Date('2016-02-04'),
+        startDate: thirtyDaysAgo,
+        endDate: today,
         showMonthLabels: false,
-        values: [{
-          date: '2016-01-02',
-          count: 1
-        }, {
-          date: '2016-01-04',
-          count: 3
-        }, {
-          date: '2016-01-10',
-          count: 4
-        }, {
-          date: '2016-01-12',
-          count: 3
-        }, {
-          date: '2016-01-15',
-          count: 1
-        }, {
-          date: '2016-01-16',
-          count: 3
-        }, {
-          date: '2016-01-22',
-          count: 2
-        }, {
-          date: '2016-01-23',
-          count: 3
-        }, {
-          date: '2016-01-27',
-          count: 1
-        }, {
-          date: '2016-01-30',
-          count: 2
-        }],
+        values: values,
         classForValue: function classForValue(value) {
           if (!value) {
             return 'color-empty';
@@ -47425,7 +47410,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -237,16 +237,22 @@ button:active {
 }
 
 .react-calendar-heatmap .color-scale-1 {
-  fill: rgb(233, 173, 108);
+  fill: rgb(255, 192, 124);
 }
 .react-calendar-heatmap .color-scale-2 {
-  fill: rgb(230, 150, 64);
+  fill: rgb(255, 170, 79);
 }
 .react-calendar-heatmap .color-scale-3 {
-  fill: rgb(220, 129, 31);
+  fill: rgb(255, 158, 53);
 }
 .react-calendar-heatmap .color-scale-4 {
-  fill: rgb(176, 91, 0);
+  fill: rgb(255, 146, 30);
+}
+.react-calendar-heatmap .color-scale-5 {
+  fill: rgb(255, 132, 0);
+}
+.react-calendar-heatmap .color-scale-0 {
+  fill: #ffffff;
 }
 .react-calendar-heatmap .color-empty {
   fill: #ffffff;

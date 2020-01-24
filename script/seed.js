@@ -2,6 +2,7 @@
 
 const db = require('../server/db')
 const {User, Habit, Entry} = require('../server/db/models')
+const dummyEntries = require('./dummyData')
 
 async function seed() {
   await db.sync({force: true})
@@ -37,17 +38,10 @@ async function seed() {
     })
   ])
 
-  const entries = await Promise.all([
-    Entry.create({habitId: 1, value: 1, userId: 1}),
-    Entry.create({habitId: 2, value: 1, userId: 1}),
-    Entry.create({habitId: 3, value: 3, userId: 1}),
-    Entry.create({habitId: 3, value: 1, userId: 1, createdAt: '2020-01-22'}),
-    Entry.create({habitId: 3, value: 5, userId: 1, createdAt: '2020-01-21'}),
-    Entry.create({habitId: 3, value: 2, userId: 1, createdAt: '2020-01-20'}),
-    Entry.create({habitId: 3, value: 0, userId: 1, createdAt: '2020-01-19'})
-  ])
+  const entries = await Promise.all([Entry.bulkCreate(dummyEntries)])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${entries[0].length} entries`)
   console.log(`seeded ${habits.length} habits`)
   console.log(`seeded successfully`)
 }

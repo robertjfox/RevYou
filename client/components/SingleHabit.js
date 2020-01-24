@@ -13,8 +13,10 @@ class SingleHabit extends Component {
   render() {
     const {habitId} = this.props.match.params
     const {singleHabit, deleteHabit} = this.props
+    const {ratingType} = singleHabit
     const {entries} = singleHabit
     const values = []
+
     if (entries) {
       entries.forEach(entry =>
         values.push({
@@ -22,11 +24,17 @@ class SingleHabit extends Component {
           count: entry.value
         })
       )
+      var average =
+        entries.reduce((accum, entry) => {
+          return accum + entry.value
+        }, 0) / entries.length
     }
 
     const today = new Date()
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
+    console.log(average, ratingType)
 
     return (
       <div id="singleHabit">
@@ -48,6 +56,15 @@ class SingleHabit extends Component {
               return `color-scale-${value.count}`
             }}
           />
+
+          {ratingType === 'Counter' && (
+            <h2>
+              Average Per Day:{' '}
+              <span style={{color: 'rgb(235, 156, 71)', fontWeight: '500'}}>
+                {average}
+              </span>{' '}
+            </h2>
+          )}
         </div>
         <div id="singleHabitBottom">
           <button type="button" onClick={() => deleteHabit(habitId)}>

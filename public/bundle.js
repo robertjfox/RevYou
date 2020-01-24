@@ -542,9 +542,16 @@ __webpack_require__.r(__webpack_exports__);
 var Binary = function Binary(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "ratingBinary"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "squaredFour"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "checkbox"
-  }));
+    type: "checkbox",
+    value: "None",
+    id: "squaredFour",
+    name: "check"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "squaredFour"
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Binary);
@@ -562,13 +569,90 @@ var Binary = function Binary(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
-var Counter = function Counter(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "ratingCounter"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "#"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "+"));
-};
+
+var Counter =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Counter, _Component);
+
+  function Counter(props) {
+    var _this;
+
+    _classCallCheck(this, Counter);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Counter).call(this, props));
+    _this.state = {
+      count: 0
+    };
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Counter, [{
+    key: "handleClick",
+    value: function handleClick(e) {
+      var plusOrMinus = e.target.innerText;
+      var count = this.state.count;
+
+      if (plusOrMinus === '-' && count !== 0) {
+        this.setState({
+          count: count - 1
+        });
+      }
+
+      if (plusOrMinus === '+') {
+        this.setState({
+          count: count + 1
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var count = this.state.count;
+      var style = {};
+
+      if (count) {
+        style = {
+          color: 'rgb(235, 156, 71)'
+        };
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "ratingCounter"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.handleClick
+      }, "-"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        style: style
+      }, count), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.handleClick
+      }, "+"));
+    }
+  }]);
+
+  return Counter;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Counter);
 
@@ -640,7 +724,7 @@ function (_Component) {
         name: "rate1",
         starCount: 5,
         value: rating,
-        emptyStarColor: "white",
+        emptyStarColor: "#fcfff4",
         starColor: "rgb(235, 156, 71)",
         renderStarIcon: function renderStarIcon() {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -724,6 +808,7 @@ function (_Component) {
       var _this$props = this.props,
           singleHabit = _this$props.singleHabit,
           deleteHabit = _this$props.deleteHabit;
+      var ratingType = singleHabit.ratingType;
       var entries = singleHabit.entries;
       var values = [];
 
@@ -734,11 +819,15 @@ function (_Component) {
             count: entry.value
           });
         });
+        var average = entries.reduce(function (accum, entry) {
+          return accum + entry.value;
+        }, 0) / entries.length;
       }
 
       var today = new Date();
       var thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      console.log(average, ratingType);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabit"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -757,7 +846,12 @@ function (_Component) {
 
           return "color-scale-".concat(value.count);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), ratingType === 'Counter' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Average Per Day:", ' ', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        style: {
+          color: 'rgb(235, 156, 71)',
+          fontWeight: '500'
+        }
+      }, average), ' ')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabitBottom"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
@@ -821,6 +915,17 @@ var UserHome = function UserHome(props) {
   var firstName = props.firstName,
       email = props.email,
       habits = props.habits;
+  var now = new Date();
+  var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 59, 0, 0) - now;
+  console.log(millisTill10);
+
+  if (millisTill10 < 0) {
+    millisTill10 += 86400000;
+  }
+
+  setTimeout(function () {
+    alert("It's 10am!");
+  }, millisTill10);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "userHome"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {

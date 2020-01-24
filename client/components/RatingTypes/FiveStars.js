@@ -22,7 +22,7 @@ class FiveStars extends Component {
           name="rate1"
           starCount={5}
           value={rating}
-          emptyStarColor="white"
+          emptyStarColor="#fcfff4"
           starColor="rgb(235, 156, 71)"
           renderStarIcon={() => <span className="fiveStarsCharacter">★</span>}
           onStarClick={this.onStarClick.bind(this)}

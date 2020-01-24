@@ -930,7 +930,7 @@ var UserHome = function UserHome(props) {
     id: "userHome"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: "homePageWelcome"
-  }, "Welcome back, ", firstName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Welcome back, ", firstName, "!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "homepageDaySelector"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "PREV"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01-23-2020"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "NEXT")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, habits.map(function (habit) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["HabitThumb"], {

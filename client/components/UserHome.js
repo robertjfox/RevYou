@@ -20,7 +20,7 @@ export const UserHome = props => {
 
   return (
     <div id="userHome">
-      <h2 className="homePageWelcome">Welcome back, {firstName}</h2>
+      <h2 className="homePageWelcome">Welcome back, {firstName}!</h2>
       <div id="homepageDaySelector">
         <button>PREV</button>
         <h2>01-23-2020</h2>

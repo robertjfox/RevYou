@@ -18,7 +18,7 @@ for (let i = 0; i < 100; i++) {
 
   let exerciseEntry = {
     habitId: 1,
-    value: getRandomInt(2) * 5,
+    value: getRandomInt(2),
     userId: 1,
     createdAt: day
   }

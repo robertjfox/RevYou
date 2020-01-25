@@ -4,7 +4,7 @@
   "name": "RevYou",
   "scope": "/",
   "display": "fullscreen",
-  "start_url": "/home",
+  "start_url": "/",
   "short_name": "RevYou",
   "theme_color": "transparent",
   "description": "Productivity App for making and maintaining good habits",

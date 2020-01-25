@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {getHabits} from './'
 
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
@@ -27,7 +28,8 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
-    dispatch(getUser(res.data))
+    await dispatch(getUser(res.data))
+    dispatch(getHabits())
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

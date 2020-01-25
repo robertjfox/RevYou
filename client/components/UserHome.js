@@ -6,25 +6,25 @@ import {HabitThumb, MakeHabitModal} from './'
 export const UserHome = props => {
   const {firstName, email, habits} = props
 
-  var now = new Date()
-  var millisTill10 =
-    new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 59, 0, 0) -
-    now
-  console.log(millisTill10)
-  if (millisTill10 < 0) {
-    millisTill10 += 86400000
-  }
-  setTimeout(function() {
-    alert("It's 10am!")
-  }, millisTill10)
+  // var now = new Date()
+  // var millisTill10 =
+  //   new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 59, 0, 0) -
+  //   now
+  // console.log(millisTill10)
+  // if (millisTill10 < 0) {
+  //   millisTill10 += 86400000
+  // }
+  // setTimeout(function() {
+  //   alert("It's 10am!")
+  // }, millisTill10)
 
   return (
     <div id="userHome">
       <h2 className="homePageWelcome">Welcome back, {firstName}!</h2>
       <div id="homepageDaySelector">
-        <button>PREV</button>
+        <button type="button">PREV</button>
         <h2>01-23-2020</h2>
-        <button>NEXT</button>
+        <button type="button">NEXT</button>
       </div>
       <div>
         {habits.map(habit => {

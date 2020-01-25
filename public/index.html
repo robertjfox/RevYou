@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <meta charset="utf-8" /> -->
-    <!-- <meta name="viewport" content="width=device-width initial-scale=1.0" /> -->
-    <!-- <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0 user-scalable=no"
-    /> -->
-    <!-- <meta name="viewport" content="width=device-width, user-scalable=no" /> -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
-      name="viewport"
-      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
     />
-    <!-- <meta name=”viewport” content=”width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no” /> -->
     <title>Testing Zoom</title>
-    <link rel="stylesheet" href="/style.css" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./public/icons/default.png" />
     <script>
       if ('serviceWorker' in navigator) {
-        if (navigator.serviceWorker.controller) {
-          console.log(
-            '[PWA Builder] active service worker found, no need to register'
-          )
-        } else {
-          // Register the service worker
+        window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register('pwabuilder-sw.js', {
-              scope: './'
-            })
-            .then(function(reg) {
-              console.log(
-                '[PWA Builder] Service worker has been registered for scope: ' +
-                  reg.scope
-              )
-            })
-        }
+            .register('./sw2.js')
+            .then(reg => console.log('Service Worker Registered'))
+            .catch(err => console.log(`Service Worker Error: ${err}`))
+        })
       }
     </script>
     <script defer src="/bundle.js"></script>

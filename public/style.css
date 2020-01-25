@@ -7,6 +7,7 @@ body {
     rgb(8, 8, 57),
     rgb(1, 1, 23)
   );
+  touch-action: manipulation;
 }
 
 a {

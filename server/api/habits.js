@@ -10,7 +10,12 @@ router.get('/', async (req, res, next) => {
       const habits = await Habit.findAll({
         where: {
           userId: req.user.id
-        }
+        },
+        include: [
+          {
+            model: Entry
+          }
+        ]
       })
       res.json(habits)
     } else {
@@ -23,27 +28,27 @@ router.get('/', async (req, res, next) => {
 
 // get a single habit with the entries eager loaded
 
-router.get('/:habitId', async (req, res, next) => {
-  try {
-    if (req.user) {
-      const habit = await Habit.findOne({
-        where: {
-          id: req.params.habitId
-        },
-        include: [
-          {
-            model: Entry
-          }
-        ]
-      })
-      res.send(habit)
-    } else {
-      res.sendStatus(401)
-    }
-  } catch (error) {
-    next(error)
-  }
-})
+// router.get('/:habitId', async (req, res, next) => {
+//   try {
+//     if (req.user) {
+//       const habit = await Habit.findOne({
+//         where: {
+//           id: req.params.habitId
+//         },
+//         include: [
+//           {
+//             model: Entry
+//           }
+//         ]
+//       })
+//       res.send(habit)
+//     } else {
+//       res.sendStatus(401)
+//     }
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 router.post('/', async (req, res, next) => {
   try {

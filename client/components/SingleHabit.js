@@ -1,18 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {getSingleHabit, deleteHabit} from '../store/'
+import {deleteHabit} from '../store/'
 import CalendarHeatmap from 'react-calendar-heatmap'
 
 class SingleHabit extends Component {
-  componentDidMount() {
-    const {habitId} = this.props.match.params
-    this.props.getSingleHabit(habitId)
-  }
-
   render() {
     const {habitId} = this.props.match.params
-    const {singleHabit, deleteHabit} = this.props
+    const {deleteHabit, habits} = this.props
+    const singleHabit = habits.find(habit => habit.id === Number(habitId))
     const {ratingType} = singleHabit
     const {entries} = singleHabit
     const values = []
@@ -34,12 +30,9 @@ class SingleHabit extends Component {
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
 
-    console.log(average, ratingType)
-
     return (
       <div id="singleHabit">
         <div id="singleHabitTop">
-          {/* <img src={`/${singleHabit.imgPath}`} /> */}
           <h1>{singleHabit.name}</h1>
         </div>
         <div id="singleHabitAnalysis">
@@ -78,13 +71,12 @@ class SingleHabit extends Component {
 
 const mapState = state => {
   return {
-    singleHabit: state.singleHabit
+    habits: state.habits
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    getSingleHabit: habitId => dispatch(getSingleHabit(habitId)),
     deleteHabit: habitId => dispatch(deleteHabit(habitId))
   }
 }
@@ -92,7 +84,6 @@ const mapDispatch = dispatch => {
 export default connect(mapState, mapDispatch)(SingleHabit)
 
 SingleHabit.propTypes = {
-  singleHabit: PropTypes.object.isRequired,
-  getSingleHabit: PropTypes.func.isRequired,
+  habits: PropTypes.array.isRequired,
   deleteHabit: PropTypes.func.isRequired
 }

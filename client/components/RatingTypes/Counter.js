@@ -34,11 +34,19 @@ class Counter extends Component {
     }
     return (
       <div className="ratingCounter">
-        <button type="button" onClick={this.handleClick}>
+        <button
+          type="button"
+          onClick={this.handleClick}
+          style={{touchAction: 'manipulation'}}
+        >
           -
         </button>
         <h1 style={style}>{count}</h1>
-        <button type="button" onClick={this.handleClick}>
+        <button
+          type="button"
+          onClick={this.handleClick}
+          style={{touchAction: 'manipulation'}}
+        >
           +
         </button>
       </div>

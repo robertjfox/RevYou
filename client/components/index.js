@@ -1,5 +1,6 @@
 export {default as Navbar} from './Navbar'
 export {default as UserHome} from './UserHome'
+export {default as UserProfile} from './UserProfile'
 export {default as HabitThumb} from './HabitThumb'
 export {default as SingleHabit} from './SingleHabit'
 export {default as MakeHabitModal} from './MakeHabitModal'

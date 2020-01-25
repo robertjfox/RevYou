@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, SingleHabit} from './components'
+import {Login, Signup, UserHome, SingleHabit, UserProfile} from './components'
 import {me, getHabits} from './store'
 
 class Routes extends Component {
@@ -21,6 +21,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={UserHome} />
             <Route path="/singleHabit/:habitId" component={SingleHabit} />
+            <Route path="/userProfile" component={UserProfile} />
           </Switch>
         )}
         <Route component={Login} />

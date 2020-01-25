@@ -62,15 +62,56 @@ button:active {
   );
 }
 
+#app {
+}
+
+#authForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+#authForm label {
+  font-size: 20px;
+  margin: 10px 0px 10px 0px;
+}
+
+#authForm input {
+  height: 30px;
+  width: 200px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+#authForm button {
+  height: 50px;
+  width: 180px;
+  border-radius: 15px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+#authSubmit {
+  display: flex;
+  justify-content: center;
+}
+
 #navBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 4vh;
-  padding: 20px 40px 20px 40px;
+  padding: 20px 30px 20px 30px;
   background: rgba(211, 211, 211, 0.075);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#navBar h2 {
+  color: white;
+  font-size: 15px;
 }
 
 #placeholderLogoText {

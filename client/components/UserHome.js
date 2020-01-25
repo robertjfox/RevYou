@@ -4,19 +4,7 @@ import {connect} from 'react-redux'
 import {HabitThumb, MakeHabitModal} from './'
 
 export const UserHome = props => {
-  const {firstName, email, habits} = props
-
-  // var now = new Date()
-  // var millisTill10 =
-  //   new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 59, 0, 0) -
-  //   now
-  // console.log(millisTill10)
-  // if (millisTill10 < 0) {
-  //   millisTill10 += 86400000
-  // }
-  // setTimeout(function() {
-  //   alert("It's 10am!")
-  // }, millisTill10)
+  const {firstName, habits} = props
 
   return (
     <div id="userHome">

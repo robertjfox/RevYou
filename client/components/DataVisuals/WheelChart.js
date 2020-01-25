@@ -76,6 +76,7 @@ const WheelChart = props => {
   const data = getWheelData(entries, ratingType)
   return (
     <div className="wheelChartCont">
+      <h2>Number of Entries: {entries.length}</h2>
       <ResponsivePie
         data={data}
         margin={{top: 40, right: 40, bottom: 40, left: 40}}

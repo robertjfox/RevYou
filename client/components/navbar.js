@@ -31,12 +31,19 @@ class Navbar extends Component {
             <Link to="/home">
               <h1 id="placeholderLogoText">RevYou</h1>
             </Link>
-            <img src="/icons/userProfile.png" className="navIcons" />
+            <Link to="userProfile">
+              <img src="/icons/userProfile.png" className="navIcons" />
+            </Link>
           </nav>
         ) : (
           <nav id="navBar">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">
+              <h2>Login</h2>
+            </Link>
+            <h1 id="placeholderLogoText">RevYou</h1>
+            <Link to="/signup">
+              <h2>Sign Up</h2>
+            </Link>
           </nav>
         )}
       </div>

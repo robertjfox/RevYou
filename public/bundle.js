@@ -176,7 +176,8 @@ function (_Component) {
       switch (display) {
         case 'calendar':
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_1__["Calendar"], {
-            entries: entries
+            entries: entries,
+            ratingType: ratingType
           });
 
         case 'wheelChart':
@@ -352,11 +353,18 @@ __webpack_require__.r(__webpack_exports__);
 function getBarData(entries, ratingType) {
   var data = [];
   var monthVals = {};
+  var dayCount = 0;
 
   for (var i = entries.length - 1; i >= 0; i--) {
     var currentMonth = entries[i].createdAt.split('-')[1];
+    dayCount++;
 
     if (!monthVals[currentMonth]) {
+      if (ratingType === 'FiveStars' && data.length) {
+        data[data.length - 1].value = (data[data.length - 1].value / dayCount).toFixed(2);
+        dayCount = 0;
+      }
+
       monthVals[currentMonth] = true;
       data.push({
         month: currentMonth,
@@ -364,6 +372,10 @@ function getBarData(entries, ratingType) {
       });
     } else {
       data[data.length - 1].value += entries[i].value;
+
+      if (i === 0 && ratingType === 'FiveStars') {
+        data[data.length - 1].value = (data[data.length - 1].value / dayCount).toFixed(2);
+      }
     }
   }
 
@@ -376,7 +388,7 @@ var BarChart = function BarChart(props) {
   var data = getBarData(entries, ratingType);
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "barChartCont"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h2", null, "Monthly Totals:"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_nivo_bar__WEBPACK_IMPORTED_MODULE_0__["ResponsiveBar"], {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, ratingType === 'FiveStars' ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h2", null, "Monthly Averages:") : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h2", null, "Monthly Totals:")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_nivo_bar__WEBPACK_IMPORTED_MODULE_0__["ResponsiveBar"], {
     data: data,
     keys: ['value'],
     indexBy: "month",
@@ -438,7 +450,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Calendar = function Calendar(props) {
-  var entries = props.entries;
+  var entries = props.entries,
+      ratingType = props.ratingType;
   var today = new Date();
   var yesterday = new Date();
   yesterday.setDate(today.getDate() - 1);
@@ -458,6 +471,18 @@ var Calendar = function Calendar(props) {
     }, 0) / entries.length;
   }
 
+  var thirtyDayTotal = function thirtyDayTotal(entries) {
+    var index = 0,
+        total = 0;
+
+    while (index < 30) {
+      total += entries[index].value;
+      index++;
+    }
+
+    return total;
+  };
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "calendarCont"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Past 30 Days:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_calendar_heatmap__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -472,7 +497,7 @@ var Calendar = function Calendar(props) {
 
       return "color-scale-".concat(value.count);
     }
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Average Per Day: ", average));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Average: ", average, ratingType !== 'FiveStars' && " \u2022 Total: ".concat(thirtyDayTotal(entries))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Calendar);
@@ -1448,7 +1473,7 @@ function (_Component) {
         className: "userProfileButton",
         type: "button",
         onClick: this.toggleDelete
-      }, "Delete Habits"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, this.state.deleteToggle ? 'Hide Habits' : 'Delete Habits'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "userProfileButton",
         onClick: logout,
         type: "button"

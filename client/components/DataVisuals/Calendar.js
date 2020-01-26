@@ -2,7 +2,7 @@ import React from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
 
 const Calendar = props => {
-  const {entries} = props
+  const {entries, ratingType} = props
 
   const today = new Date()
   const yesterday = new Date()
@@ -25,6 +25,16 @@ const Calendar = props => {
       }, 0) / entries.length
   }
 
+  const thirtyDayTotal = entries => {
+    let index = 0,
+      total = 0
+    while (index < 30) {
+      total += entries[index].value
+      index++
+    }
+    return total
+  }
+
   return (
     <div className="calendarCont">
       <h2>Past 30 Days:</h2>
@@ -40,7 +50,10 @@ const Calendar = props => {
           return `color-scale-${value.count}`
         }}
       />
-      <h2>Average Per Day: {average}</h2>
+      <h2>
+        Average: {average}
+        {ratingType !== 'FiveStars' && ` • Total: ${thirtyDayTotal(entries)}`}
+      </h2>
     </div>
   )
 }

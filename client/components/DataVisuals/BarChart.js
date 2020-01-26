@@ -4,10 +4,19 @@ import React from 'react'
 function getBarData(entries, ratingType) {
   let data = []
   let monthVals = {}
+  let dayCount = 0
 
   for (let i = entries.length - 1; i >= 0; i--) {
     let currentMonth = entries[i].createdAt.split('-')[1]
+    dayCount++
+
     if (!monthVals[currentMonth]) {
+      if (ratingType === 'FiveStars' && data.length) {
+        data[data.length - 1].value = (
+          data[data.length - 1].value / dayCount
+        ).toFixed(2)
+        dayCount = 0
+      }
       monthVals[currentMonth] = true
       data.push({
         month: currentMonth,
@@ -15,9 +24,13 @@ function getBarData(entries, ratingType) {
       })
     } else {
       data[data.length - 1].value += entries[i].value
+      if (i === 0 && ratingType === 'FiveStars') {
+        data[data.length - 1].value = (
+          data[data.length - 1].value / dayCount
+        ).toFixed(2)
+      }
     }
   }
-
   return data
 }
 
@@ -27,7 +40,13 @@ const BarChart = props => {
 
   return (
     <div className="barChartCont">
-      <h2>Monthly Totals:</h2>
+      <div>
+        {ratingType === 'FiveStars' ? (
+          <h2>Monthly Averages:</h2>
+        ) : (
+          <h2>Monthly Totals:</h2>
+        )}
+      </div>
       <ResponsiveBar
         data={data}
         keys={['value']}

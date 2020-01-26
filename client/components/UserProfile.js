@@ -47,7 +47,7 @@ class UserProfile extends Component {
           type="button"
           onClick={this.toggleDelete}
         >
-          Delete Habits
+          {this.state.deleteToggle ? 'Hide Habits' : 'Delete Habits'}
         </button>
         <button className="userProfileButton" onClick={logout} type="button">
           Logout

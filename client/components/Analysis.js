@@ -18,7 +18,7 @@ class BinaryAnalysis extends Component {
     const {display} = this.state
     switch (display) {
       case 'calendar':
-        return <Calendar entries={entries} />
+        return <Calendar entries={entries} ratingType={ratingType} />
       case 'wheelChart':
         return <WheelChart entries={entries} ratingType={ratingType} />
       case 'barChart':

@@ -636,7 +636,8 @@ __webpack_require__.r(__webpack_exports__);
  // import {connect} from 'react-redux'
 
 var HabitThumb = function HabitThumb(props) {
-  var habit = props.habit;
+  var habit = props.habit,
+      index = props.index;
   var RatingType;
 
   if (habit.ratingType === 'FiveStars') {
@@ -652,12 +653,17 @@ var HabitThumb = function HabitThumb(props) {
   }
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "habitThumb"
+    id: "habitThumb" //  style={{animationDelay: `${index}s`}}
+
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "habitLink"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/singleHabit/".concat(habit.id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: '/' + habit.imgPath
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, null));
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "habitRatingCont"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, null)));
 };
 /* harmony default export */ __webpack_exports__["default"] = (HabitThumb);
 HabitThumb.propTypes = {
@@ -1326,9 +1332,10 @@ var UserHome = function UserHome(props) {
     type: "button"
   }, "PREV"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01-23-2020"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button"
-  }, "NEXT")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, habits.map(function (habit) {
+  }, "NEXT")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, habits.map(function (habit, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["HabitThumb"], {
       key: habit.id,
+      index: index,
       habit: habit
     });
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

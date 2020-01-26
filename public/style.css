@@ -1,3 +1,11 @@
+:root {
+  --background-gradient: linear-gradient(
+    to bottom right,
+    rgba(169, 169, 169, 0.071),
+    rgba(255, 255, 255, 0.297)
+  );
+}
+
 html {
   width: 100%;
 }
@@ -40,7 +48,8 @@ form div {
 }
 
 button {
-  background: rgba(169, 169, 169, 0.132);
+  background: transparent;
+  background-image: var(--background-gradient);
   border: 1px solid rgba(255, 255, 255, 0.146);
   color: white;
   border-radius: 10px;
@@ -52,17 +61,6 @@ button:hover {
   background: rgba(169, 169, 169, 0.132);
   border: 1px solid rgba(255, 255, 255, 0.146);
   color: lightgrey;
-}
-
-button:active {
-  background-image: linear-gradient(
-    to bottom right,
-    rgb(238, 179, 115),
-    rgb(228, 129, 24)
-  );
-}
-
-#app {
 }
 
 #authForm {
@@ -104,7 +102,11 @@ button:active {
   align-items: center;
   height: 4vh;
   padding: 20px 30px 20px 30px;
-  background: rgba(211, 211, 211, 0.075);
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(169, 169, 169, 0.084),
+    rgba(255, 255, 255, 0.194)
+  );
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -136,21 +138,39 @@ button:active {
 
 #habitThumb {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  width: 60vw;
-  height: 50px;
-  padding: 10px 15px 10px 15px;
-  margin-bottom: 15px;
-  background: rgba(169, 169, 169, 0.132);
-  border: 1px solid rgba(255, 255, 255, 0.146);
-  border-radius: 10px;
+  width: 70vw;
+  max-width: 400px;
+  margin-bottom: 20px;
+  animation-name: fadeIn;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
 }
 
 #habitThumb img {
   height: 40px;
   width: 40px;
-  fill: red;
+}
+
+#habitLink {
+  padding: 10px;
+  background-image: var(--background-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.146);
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+#habitRatingCont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  height: 45px;
+  width: 100%;
+  background-image: var(--background-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.146);
+  border-radius: 10px;
 }
 
 #makeHabitCont button {
@@ -307,6 +327,8 @@ button:active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  animation-name: fadeIn;
+  animation-duration: 1s;
 }
 
 .react-calendar-heatmap .color-scale-1 {
@@ -379,4 +401,15 @@ button:active {
 }
 .squaredFour input[type='checkbox']:checked + label:after {
   opacity: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    height: 80%;
+    width: 100%;
+  }
+  100% {
+    height: 100%;
+    width: 100%;
+  }
 }

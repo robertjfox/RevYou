@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 // import {connect} from 'react-redux'
 
 export const HabitThumb = props => {
-  const {habit} = props
+  const {habit, index} = props
   let RatingType
 
   if (habit.ratingType === 'FiveStars') {
@@ -21,11 +21,18 @@ export const HabitThumb = props => {
   }
 
   return (
-    <div id="habitThumb">
-      <Link to={`/singleHabit/${habit.id}`}>
-        <img src={'/' + habit.imgPath} />
-      </Link>
-      <RatingType />
+    <div
+      id="habitThumb"
+      //  style={{animationDelay: `${index}s`}}
+    >
+      <div id="habitLink">
+        <Link to={`/singleHabit/${habit.id}`}>
+          <img src={'/' + habit.imgPath} />
+        </Link>
+      </div>
+      <div id="habitRatingCont">
+        <RatingType />
+      </div>
     </div>
   )
 }

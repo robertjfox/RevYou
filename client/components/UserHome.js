@@ -15,8 +15,8 @@ export const UserHome = props => {
         <button type="button">NEXT</button>
       </div>
       <div>
-        {habits.map(habit => {
-          return <HabitThumb key={habit.id} habit={habit} />
+        {habits.map((habit, index) => {
+          return <HabitThumb key={habit.id} index={index} habit={habit} />
         })}
       </div>
       <div id="makeHabitCont">

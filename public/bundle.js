@@ -653,8 +653,10 @@ var HabitThumb = function HabitThumb(props) {
   }
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "habitThumb" //  style={{animationDelay: `${index}s`}}
-
+    id: "habitThumb",
+    style: {
+      animationDelay: "".concat(index / 8, "s")
+    }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "habitLink"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
@@ -941,7 +943,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         id: "placeholderLogoText"
       }, "RevYou")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-        to: "userProfile"
+        to: "/userProfile"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/icons/userProfile.png",
         className: "navIcons"
@@ -1383,9 +1385,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1401,34 +1403,81 @@ function (_Component) {
   _inherits(UserProfile, _Component);
 
   function UserProfile(props) {
+    var _this;
+
     _classCallCheck(this, UserProfile);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(UserProfile).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UserProfile).call(this, props));
+    _this.state = {
+      deleteToggle: false
+    };
+    _this.toggleDelete = _this.toggleDelete.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(UserProfile, [{
+    key: "toggleDelete",
+    value: function toggleDelete() {
+      this.setState({
+        deleteToggle: !this.state.deleteToggle
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var logout = this.props.logout;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      var _this$props = this.props,
+          logout = _this$props.logout,
+          user = _this$props.user,
+          habits = _this$props.habits,
+          deleteHabit = _this$props.deleteHabit;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "userProfile"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "userProfileInfo"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Name: ", user.firstName, " ", user.lastName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Email: ", user.email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "User Since: ", user.createdAt.slice(0, 10))), this.state.deleteToggle && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, habits.map(function (habit) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "deleteHabitRow",
+          key: habit.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, habit.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          onClick: function onClick() {
+            return deleteHabit(habit.id);
+          }
+        }, "X"));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "userProfileButton",
+        type: "button",
+        onClick: this.toggleDelete
+      }, "Delete Habits"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "userProfileButton",
         onClick: logout,
         type: "button"
-      }, "Logout");
+      }, "Logout"));
     }
   }]);
 
   return UserProfile;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+var mapState = function mapState(state) {
+  return {
+    user: state.user,
+    habits: state.habits
+  };
+};
+
 var mapDistpach = function mapDistpach(dispatch) {
   return {
     logout: function logout() {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_2__["logout"])());
+    },
+    deleteHabit: function deleteHabit(habitId) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_2__["deleteHabit"])(habitId));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDistpach)(UserProfile));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDistpach)(UserProfile));
 
 /***/ }),
 
@@ -1626,11 +1675,11 @@ function (_Component) {
         path: "/home",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["UserHome"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/singleHabit/:habitId",
-        component: _components__WEBPACK_IMPORTED_MODULE_4__["SingleHabit"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/userProfile",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["UserProfile"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/singleHabit/:habitId",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["SingleHabit"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Login"]
       }));
@@ -82666,7 +82715,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -31,7 +31,7 @@ class Navbar extends Component {
             <Link to="/home">
               <h1 id="placeholderLogoText">RevYou</h1>
             </Link>
-            <Link to="userProfile">
+            <Link to="/userProfile">
               <img src="/icons/userProfile.png" className="navIcons" />
             </Link>
           </nav>

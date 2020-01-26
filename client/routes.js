@@ -20,8 +20,8 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             <Route path="/home" component={UserHome} />
-            <Route path="/singleHabit/:habitId" component={SingleHabit} />
             <Route path="/userProfile" component={UserProfile} />
+            <Route path="/singleHabit/:habitId" component={SingleHabit} />
           </Switch>
         )}
         <Route component={Login} />

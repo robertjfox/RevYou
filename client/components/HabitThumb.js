@@ -21,10 +21,7 @@ export const HabitThumb = props => {
   }
 
   return (
-    <div
-      id="habitThumb"
-      //  style={{animationDelay: `${index}s`}}
-    >
+    <div id="habitThumb" style={{animationDelay: `${index / 8}s`}}>
       <div id="habitLink">
         <Link to={`/singleHabit/${habit.id}`}>
           <img src={'/' + habit.imgPath} />

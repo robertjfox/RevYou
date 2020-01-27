@@ -7,13 +7,6 @@ import {logout} from '../store'
 class Navbar extends Component {
   constructor(props) {
     super(props)
-
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick() {
-    console.log('hello')
-    document.body.requestFullscreen()
   }
 
   render() {
@@ -23,11 +16,9 @@ class Navbar extends Component {
       <div>
         {isLoggedIn ? (
           <nav id="navBar">
-            <img
-              src="/icons/settings.png"
-              className="navIcons"
-              onClick={this.handleClick}
-            />
+            <Link to="/userProfile">
+              <img src="/icons/settings.png" className="navIcons" />
+            </Link>
             <Link to="/home">
               <h1 id="placeholderLogoText">RevYou</h1>
             </Link>

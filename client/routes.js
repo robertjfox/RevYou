@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, SingleHabit, UserProfile} from './components'
-import {me, getHabits} from './store'
+import {me, getHabits, getEntries} from './store'
 
 class Routes extends Component {
   componentDidMount() {
@@ -41,6 +41,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
       dispatch(getHabits())
+      dispatch(getEntries())
     }
   }
 }

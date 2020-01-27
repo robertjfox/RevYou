@@ -72,9 +72,9 @@ class MakeHabitModal extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="makeHabitCont">
         <button type="button" onClick={this.openModal} className="modal">
-          Make New Habit
+          Add Habit
         </button>
         <Modal
           isOpen={this.state.modalIsOpen}

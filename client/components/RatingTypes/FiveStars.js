@@ -6,7 +6,20 @@ class FiveStars extends Component {
     super()
 
     this.state = {
-      rating: 0
+      rating: 0,
+      entryId: 0
+    }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const {entry} = props
+    if (props.entry && state.entryId !== props.entry.id) {
+      return {
+        rating: entry.value,
+        entryId: entry.id
+      }
+    } else {
+      return null
     }
   }
 

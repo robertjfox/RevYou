@@ -5,10 +5,23 @@ class Counter extends Component {
     super(props)
 
     this.state = {
-      count: 0
+      count: 0,
+      entryId: 0
     }
 
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const {entry} = props
+    if (props.entry && state.entryId !== props.entry.id) {
+      return {
+        count: entry.value,
+        entryId: entry.id
+      }
+    } else {
+      return null
+    }
   }
 
   handleClick(e) {

@@ -3,6 +3,7 @@ module.exports = router
 
 router.use('/users', require('./users'))
 router.use('/habits', require('./habits'))
+router.use('/entries', require('./entries'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

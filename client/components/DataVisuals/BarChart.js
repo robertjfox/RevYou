@@ -2,36 +2,44 @@ import {ResponsiveBar} from '@nivo/bar'
 import React from 'react'
 
 function getBarData(entries, ratingType) {
-  let data = []
-  let monthVals = {}
-  let dayCount = 0
+  let dataObj = {},
+    dataArray = []
 
   for (let i = entries.length - 1; i >= 0; i--) {
     let currentMonth = entries[i].createdAt.split('-')[1]
-    dayCount++
+    let currentValue = entries[i].value
 
-    if (!monthVals[currentMonth]) {
-      if (ratingType === 'FiveStars' && data.length) {
-        data[data.length - 1].value = (
-          data[data.length - 1].value / dayCount
-        ).toFixed(2)
-        dayCount = 0
-      }
-      monthVals[currentMonth] = true
-      data.push({
-        month: currentMonth,
-        value: entries[i].value
-      })
+    if (dataObj[currentMonth]) {
+      dataObj[currentMonth].value += currentValue
+      dataObj[currentMonth].numDays += 1
     } else {
-      data[data.length - 1].value += entries[i].value
-      if (i === 0 && ratingType === 'FiveStars') {
-        data[data.length - 1].value = (
-          data[data.length - 1].value / dayCount
-        ).toFixed(2)
+      dataObj[currentMonth] = {
+        month: currentMonth,
+        value: currentValue,
+        numDays: 1
       }
     }
   }
-  return data
+
+  let months = Object.keys(dataObj)
+
+  for (let i = 0; i < months.length; i++) {
+    let currentMonth = months[i],
+      value
+    if (ratingType === 'FiveStars') {
+      value = (
+        dataObj[currentMonth].value / dataObj[currentMonth].numDays
+      ).toFixed(2)
+    } else {
+      value = dataObj[currentMonth].value
+    }
+    dataArray.push({
+      month: dataObj[currentMonth].month,
+      value: value
+    })
+  }
+
+  return dataArray
 }
 
 const BarChart = props => {

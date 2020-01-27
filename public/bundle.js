@@ -351,35 +351,44 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function getBarData(entries, ratingType) {
-  var data = [];
-  var monthVals = {};
-  var dayCount = 0;
+  var dataObj = {},
+      dataArray = [];
 
   for (var i = entries.length - 1; i >= 0; i--) {
     var currentMonth = entries[i].createdAt.split('-')[1];
-    dayCount++;
+    var currentValue = entries[i].value;
 
-    if (!monthVals[currentMonth]) {
-      if (ratingType === 'FiveStars' && data.length) {
-        data[data.length - 1].value = (data[data.length - 1].value / dayCount).toFixed(2);
-        dayCount = 0;
-      }
-
-      monthVals[currentMonth] = true;
-      data.push({
-        month: currentMonth,
-        value: entries[i].value
-      });
+    if (dataObj[currentMonth]) {
+      dataObj[currentMonth].value += currentValue;
+      dataObj[currentMonth].numDays += 1;
     } else {
-      data[data.length - 1].value += entries[i].value;
-
-      if (i === 0 && ratingType === 'FiveStars') {
-        data[data.length - 1].value = (data[data.length - 1].value / dayCount).toFixed(2);
-      }
+      dataObj[currentMonth] = {
+        month: currentMonth,
+        value: currentValue,
+        numDays: 1
+      };
     }
   }
 
-  return data;
+  var months = Object.keys(dataObj);
+
+  for (var _i = 0; _i < months.length; _i++) {
+    var _currentMonth = months[_i],
+        value = void 0;
+
+    if (ratingType === 'FiveStars') {
+      value = (dataObj[_currentMonth].value / dataObj[_currentMonth].numDays).toFixed(2);
+    } else {
+      value = dataObj[_currentMonth].value;
+    }
+
+    dataArray.push({
+      month: dataObj[_currentMonth].month,
+      value: value
+    });
+  }
+
+  return dataArray;
 }
 
 var BarChart = function BarChart(props) {
@@ -475,7 +484,7 @@ var Calendar = function Calendar(props) {
     var index = 0,
         total = 0;
 
-    while (index < 30) {
+    while (index < entries.length && index < 30) {
       total += entries[index].value;
       index++;
     }
@@ -643,59 +652,114 @@ var WheelChart = function WheelChart(props) {
 /*!*****************************************!*\
   !*** ./client/components/HabitThumb.js ***!
   \*****************************************/
-/*! exports provided: HabitThumb, default */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HabitThumb", function() { return HabitThumb; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ */ "./client/components/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
 
-var HabitThumb = function HabitThumb(props) {
-  var habit = props.habit,
-      index = props.index,
-      entry = props.entry,
-      updateHomeState = props.updateHomeState;
-  var RatingType;
 
-  if (habit.ratingType === 'FiveStars') {
-    RatingType = ___WEBPACK_IMPORTED_MODULE_2__["FiveStars"];
+
+var HabitThumb =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(HabitThumb, _Component);
+
+  function HabitThumb(props) {
+    var _this;
+
+    _classCallCheck(this, HabitThumb);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HabitThumb).call(this, props));
+    _this.state = {
+      submitted: false
+    };
+    return _this;
   }
 
-  if (habit.ratingType === 'Counter') {
-    RatingType = ___WEBPACK_IMPORTED_MODULE_2__["Counter"];
-  }
+  _createClass(HabitThumb, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          habit = _this$props.habit,
+          index = _this$props.index,
+          entry = _this$props.entry,
+          updateHomeState = _this$props.updateHomeState;
+      var submitted = this.state.submitted;
+      console.log(submitted);
+      var RatingType;
 
-  if (habit.ratingType === 'Binary') {
-    RatingType = ___WEBPACK_IMPORTED_MODULE_2__["Binary"];
-  }
+      if (habit.ratingType === 'FiveStars') {
+        RatingType = ___WEBPACK_IMPORTED_MODULE_2__["FiveStars"];
+      }
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "habitThumb",
-    style: {
-      animationDelay: "".concat(index / 8, "s")
+      if (habit.ratingType === 'Counter') {
+        RatingType = ___WEBPACK_IMPORTED_MODULE_2__["Counter"];
+      }
+
+      if (habit.ratingType === 'Binary') {
+        RatingType = ___WEBPACK_IMPORTED_MODULE_2__["Binary"];
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "habitThumb",
+        style: {
+          animationDelay: "".concat(index / 8, "s")
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "habitLink"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/singleHabit/".concat(habit.id)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: '/' + habit.imgPath
+      }))), submitted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "submissionConfirm"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Entry Submitted")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "habitRatingCont"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, {
+        entry: entry,
+        updateHomeState: updateHomeState
+      })));
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "habitLink"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-    to: "/singleHabit/".concat(habit.id)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: '/' + habit.imgPath
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "habitRatingCont"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, {
-    entry: entry,
-    updateHomeState: updateHomeState
-  })));
-};
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      var submitted = props.submitted;
+      return {
+        submitted: submitted
+      };
+    }
+  }]);
+
+  return HabitThumb;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
 /* harmony default export */ __webpack_exports__["default"] = (HabitThumb);
 HabitThumb.propTypes = {
   habit: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object
@@ -1413,14 +1477,18 @@ function (_Component) {
     key: "render",
     value: function render() {
       var habitId = this.props.match.params.habitId;
-      var habits = this.props.habits;
+      var _this$props = this.props,
+          habits = _this$props.habits,
+          entries = _this$props.entries;
       var singleHabit = habits.find(function (habit) {
         return habit.id === Number(habitId);
       });
 
       if (singleHabit) {
         var ratingType = singleHabit.ratingType;
-        var entries = singleHabit.entries;
+        var habitEntries = entries.filter(function (entry) {
+          return entry.habitId === singleHabit.id;
+        });
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, singleHabit ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1428,7 +1496,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "singleHabitTop"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, singleHabit.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["Analysis"], {
-        entries: entries,
+        entries: habitEntries,
         ratingType: ratingType
       })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Habit Not Found"));
     }
@@ -1439,13 +1507,15 @@ function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    habits: state.habits
+    habits: state.habits,
+    entries: state.entries
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(SingleHabit));
 SingleHabit.propTypes = {
-  habits: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired
+  habits: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired,
+  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired
 };
 
 /***/ }),
@@ -1503,11 +1573,13 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UserHome).call(this, props));
     _this.state = {
       date: new Date(),
-      currentEntries: {}
+      currentEntries: {},
+      submitted: false
     };
     _this.changeDate = _this.changeDate.bind(_assertThisInitialized(_this));
     _this.updateHomeState = _this.updateHomeState.bind(_assertThisInitialized(_this));
     _this.sendEntryUpdates = _this.sendEntryUpdates.bind(_assertThisInitialized(_this));
+    _this.toggleUpdateButton = _this.toggleUpdateButton.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1539,7 +1611,8 @@ function (_Component) {
       }
 
       this.setState({
-        date: newDate
+        date: newDate,
+        submitted: false
       });
     }
   }, {
@@ -1547,19 +1620,29 @@ function (_Component) {
     value: function sendEntryUpdates() {
       var currentEntries = this.state.currentEntries;
       this.props.updateEntries(currentEntries);
+      this.setState({
+        submitted: true
+      });
+    }
+  }, {
+    key: "toggleUpdateButton",
+    value: function toggleUpdateButton() {
+      this.setState({
+        submitted: false
+      });
     }
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      console.log(this.state.currentEntries);
       var _this$props = this.props,
           user = _this$props.user,
           habits = _this$props.habits;
       var _this$state = this.state,
           date = _this$state.date,
-          currentEntries = _this$state.currentEntries;
+          currentEntries = _this$state.currentEntries,
+          submitted = _this$state.submitted;
       var displayDate = date.toDateString().slice(4);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "userHome"
@@ -1583,11 +1666,16 @@ function (_Component) {
           index: index,
           habit: habit,
           entry: entry,
+          submitted: submitted,
           updateHomeState: _this2.updateHomeState
         });
       }) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "userHomeBottom"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["MakeHabitModal"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["MakeHabitModal"], null), submitted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        id: "submitEntriesButton",
+        onClick: this.toggleUpdateButton
+      }, "Update") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         id: "submitEntriesButton",
         onClick: this.sendEntryUpdates
@@ -1602,6 +1690,7 @@ function (_Component) {
       var currentEntries = entries.filter(function (entry) {
         return entry.createdAt.slice(0, 10) === dateToCompare;
       });
+      console.log(currentEntries);
       return {
         currentEntries: currentEntries
       };
@@ -2023,6 +2112,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateEntries", function() { return updateEntries; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2030,6 +2127,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var GOT_ENTRIES = 'GOT_ENTRIES';
 var UPDATED_ENTRIES = 'UPDATED_ENTRIES';
+var MADE_ENTRY = 'MADE_ENTRY';
 var initialState = [];
 
 var gotEntries = function gotEntries(entries) {
@@ -2043,6 +2141,13 @@ var updatedEntries = function updatedEntries(entries) {
   return {
     type: UPDATED_ENTRIES,
     entries: entries
+  };
+};
+
+var madeEntry = function madeEntry(entry) {
+  return {
+    type: MADE_ENTRY,
+    entry: entry
   };
 };
 
@@ -2139,7 +2244,14 @@ var updateEntries = function updateEntries(entries) {
       };
     }()
   );
-};
+}; // export const makeEntry = entry => async dispatch => {
+//   try {
+//     dispatch()
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -2148,11 +2260,14 @@ var updateEntries = function updateEntries(entries) {
     case GOT_ENTRIES:
       return action.entries;
 
+    case MADE_ENTRY:
+      return [].concat(_toConsumableArray(state), [action.entry]);
+
     case UPDATED_ENTRIES:
       for (var i = 0; i < action.entries.length; i++) {
         for (var j = 0; j < state.length; j++) {
           if (action.entries[i].id === state[j].id) {
-            state[j].id = action.entries[i].id;
+            state[j].value = action.entries[i].value;
           }
         }
       }
@@ -2181,6 +2296,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../history */ "./client/history.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ */ "./client/store/index.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2192,6 +2308,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -2272,21 +2389,23 @@ var makeHabit = function makeHabit(habitInfo) {
 
               case 3:
                 res = _context2.sent;
-                dispatch(madeHabit(res.data));
-                _context2.next = 10;
+                console.log(res.data);
+                dispatch(madeHabit(res.data.habit));
+                Object(___WEBPACK_IMPORTED_MODULE_2__["madeEntry"])(res.data.entry);
+                _context2.next = 12;
                 break;
 
-              case 7:
-                _context2.prev = 7;
+              case 9:
+                _context2.prev = 9;
                 _context2.t0 = _context2["catch"](0);
                 console.error(_context2.t0);
 
-              case 10:
+              case 12:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[0, 9]]);
       }));
 
       return function (_x2) {

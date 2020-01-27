@@ -1,36 +1,61 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {FiveStars, Counter, Binary} from './'
 import {Link} from 'react-router-dom'
 
-export const HabitThumb = props => {
-  const {habit, index, entry, updateHomeState} = props
-  let RatingType
+class HabitThumb extends Component {
+  constructor(props) {
+    super(props)
 
-  if (habit.ratingType === 'FiveStars') {
-    RatingType = FiveStars
+    this.state = {
+      submitted: false
+    }
   }
 
-  if (habit.ratingType === 'Counter') {
-    RatingType = Counter
+  static getDerivedStateFromProps(props, state) {
+    const {submitted} = props
+    return {
+      submitted: submitted
+    }
   }
 
-  if (habit.ratingType === 'Binary') {
-    RatingType = Binary
-  }
+  render() {
+    const {habit, index, entry, updateHomeState} = this.props
+    const {submitted} = this.state
+    console.log(submitted)
+    let RatingType
 
-  return (
-    <div id="habitThumb" style={{animationDelay: `${index / 8}s`}}>
-      <div id="habitLink">
-        <Link to={`/singleHabit/${habit.id}`}>
-          <img src={'/' + habit.imgPath} />
-        </Link>
+    if (habit.ratingType === 'FiveStars') {
+      RatingType = FiveStars
+    }
+
+    if (habit.ratingType === 'Counter') {
+      RatingType = Counter
+    }
+
+    if (habit.ratingType === 'Binary') {
+      RatingType = Binary
+    }
+
+    return (
+      <div id="habitThumb" style={{animationDelay: `${index / 8}s`}}>
+        <div id="habitLink">
+          <Link to={`/singleHabit/${habit.id}`}>
+            <img src={'/' + habit.imgPath} />
+          </Link>
+        </div>
+        {submitted ? (
+          <div id="submissionConfirm">
+            <h3>Entry Submitted</h3>
+          </div>
+        ) : (
+          <div id="habitRatingCont">
+            <RatingType entry={entry} updateHomeState={updateHomeState} />
+          </div>
+        )}
       </div>
-      <div id="habitRatingCont">
-        <RatingType entry={entry} updateHomeState={updateHomeState} />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default HabitThumb

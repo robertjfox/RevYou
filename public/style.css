@@ -200,12 +200,30 @@ button:hover {
   background-image: var(--background-gradient);
   border: 1px solid rgba(255, 255, 255, 0.146);
   border-radius: 10px;
+  animation-name: fadeInRating;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 
 #userHomeBottom {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+}
+
+#submissionConfirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  height: 45px;
+  width: 100%;
+  background-image: var(--background-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.146);
+  border-radius: 10px;
+  animation-name: fadeInSubmissionConfirm;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 
 #userHomeBottom button {
@@ -429,6 +447,24 @@ button:hover {
   100% {
     opacity: 100;
     margin-top: 0px;
+  }
+}
+
+@keyframes fadeInRating {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes fadeInSubmissionConfirm {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
   }
 }
 

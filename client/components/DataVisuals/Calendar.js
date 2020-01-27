@@ -28,7 +28,7 @@ const Calendar = props => {
   const thirtyDayTotal = entries => {
     let index = 0,
       total = 0
-    while (index < 30) {
+    while (index < entries.length && index < 30) {
       total += entries[index].value
       index++
     }

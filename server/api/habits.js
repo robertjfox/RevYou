@@ -10,12 +10,7 @@ router.get('/', async (req, res, next) => {
       const habits = await Habit.findAll({
         where: {
           userId: req.user.id
-        },
-        include: [
-          {
-            model: Entry
-          }
-        ]
+        }
       })
       res.json(habits)
     } else {
@@ -35,7 +30,12 @@ router.post('/', async (req, res, next) => {
         ratingType,
         userId: req.user.id
       })
-      res.send(habit)
+      const entry = await Entry.create({
+        value: 0,
+        userId: req.user.id,
+        habitId: habit.id
+      })
+      res.send({habit, entry})
     } else {
       res.sendStatus(401)
     }

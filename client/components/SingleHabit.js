@@ -6,11 +6,13 @@ import {Analysis} from './'
 class SingleHabit extends Component {
   render() {
     const {habitId} = this.props.match.params
-    const {habits} = this.props
+    const {habits, entries} = this.props
     const singleHabit = habits.find(habit => habit.id === Number(habitId))
     if (singleHabit) {
       var {ratingType} = singleHabit
-      var {entries} = singleHabit
+      var habitEntries = entries.filter(
+        entry => entry.habitId === singleHabit.id
+      )
     }
 
     return (
@@ -20,7 +22,7 @@ class SingleHabit extends Component {
             <div id="singleHabitTop">
               <h1>{singleHabit.name}</h1>
             </div>
-            <Analysis entries={entries} ratingType={ratingType} />
+            <Analysis entries={habitEntries} ratingType={ratingType} />
           </div>
         ) : (
           <div>Habit Not Found</div>
@@ -32,12 +34,14 @@ class SingleHabit extends Component {
 
 const mapState = state => {
   return {
-    habits: state.habits
+    habits: state.habits,
+    entries: state.entries
   }
 }
 
 export default connect(mapState)(SingleHabit)
 
 SingleHabit.propTypes = {
-  habits: PropTypes.array.isRequired
+  habits: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired
 }

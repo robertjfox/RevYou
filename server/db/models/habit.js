@@ -13,7 +13,7 @@ const Habit = db.define('habit', {
   imgPath: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'icons/default.jpg'
+    defaultValue: 'icons/default.png'
   }
 })
 

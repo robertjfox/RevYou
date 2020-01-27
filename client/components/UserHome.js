@@ -9,11 +9,13 @@ class UserHome extends Component {
     super(props)
     this.state = {
       date: new Date(),
-      currentEntries: {}
+      currentEntries: {},
+      submitted: false
     }
     this.changeDate = this.changeDate.bind(this)
     this.updateHomeState = this.updateHomeState.bind(this)
     this.sendEntryUpdates = this.sendEntryUpdates.bind(this)
+    this.toggleUpdateButton = this.toggleUpdateButton.bind(this)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -23,6 +25,7 @@ class UserHome extends Component {
     const currentEntries = entries.filter(
       entry => entry.createdAt.slice(0, 10) === dateToCompare
     )
+    console.log(currentEntries)
     return {
       currentEntries: currentEntries
     }
@@ -53,19 +56,28 @@ class UserHome extends Component {
       newDate.setTime(date.getTime() + 86400000)
     }
     this.setState({
-      date: newDate
+      date: newDate,
+      submitted: false
     })
   }
 
   sendEntryUpdates() {
     const {currentEntries} = this.state
     this.props.updateEntries(currentEntries)
+    this.setState({
+      submitted: true
+    })
+  }
+
+  toggleUpdateButton() {
+    this.setState({
+      submitted: false
+    })
   }
 
   render() {
-    console.log(this.state.currentEntries)
     const {user, habits} = this.props
-    const {date, currentEntries} = this.state
+    const {date, currentEntries, submitted} = this.state
     const displayDate = date.toDateString().slice(4)
     return (
       <div id="userHome">
@@ -92,6 +104,7 @@ class UserHome extends Component {
                     index={index}
                     habit={habit}
                     entry={entry}
+                    submitted={submitted}
                     updateHomeState={this.updateHomeState}
                   />
                 )
@@ -100,13 +113,23 @@ class UserHome extends Component {
         </div>
         <div id="userHomeBottom">
           <MakeHabitModal />
-          <button
-            type="button"
-            id="submitEntriesButton"
-            onClick={this.sendEntryUpdates}
-          >
-            Submit
-          </button>
+          {submitted ? (
+            <button
+              type="button"
+              id="submitEntriesButton"
+              onClick={this.toggleUpdateButton}
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              type="button"
+              id="submitEntriesButton"
+              onClick={this.sendEntryUpdates}
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     )

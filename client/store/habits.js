@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {madeEntry} from './'
 
 const GOT_HABITS = 'GOT_HABITS'
 const MADE_HABIT = 'MAKE_HABIT'
@@ -21,7 +22,9 @@ export const getHabits = () => async dispatch => {
 export const makeHabit = habitInfo => async dispatch => {
   try {
     const res = await axios.post(`/api/habits`, habitInfo)
-    dispatch(madeHabit(res.data))
+    console.log(res.data)
+    dispatch(madeHabit(res.data.habit))
+    madeEntry(res.data.entry)
   } catch (error) {
     console.error(error)
   }

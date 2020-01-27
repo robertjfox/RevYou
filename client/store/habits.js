@@ -3,13 +3,11 @@ import history from '../history'
 
 const GOT_HABITS = 'GOT_HABITS'
 const MADE_HABIT = 'MAKE_HABIT'
-// const DELETED_HABIT = 'DELETE_HABIT'
 
 const initialState = []
 
 const gotHabits = habits => ({type: GOT_HABITS, habits})
 const madeHabit = habit => ({type: MADE_HABIT, habit})
-// const deletedHabit = habit => ({type: DELETED_HABIT, habit})
 
 export const getHabits = () => async dispatch => {
   try {

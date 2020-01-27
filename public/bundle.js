@@ -1465,6 +1465,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ */ "./client/components/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store */ "./client/store/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1486,7 +1487,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import {updateEntry} from '../store'
+
+
 
 var UserHome =
 /*#__PURE__*/
@@ -1505,6 +1507,7 @@ function (_Component) {
     };
     _this.changeDate = _this.changeDate.bind(_assertThisInitialized(_this));
     _this.updateHomeState = _this.updateHomeState.bind(_assertThisInitialized(_this));
+    _this.sendEntryUpdates = _this.sendEntryUpdates.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1538,6 +1541,12 @@ function (_Component) {
       this.setState({
         date: newDate
       });
+    }
+  }, {
+    key: "sendEntryUpdates",
+    value: function sendEntryUpdates() {
+      var currentEntries = this.state.currentEntries;
+      this.props.updateEntries(currentEntries);
     }
   }, {
     key: "render",
@@ -1579,8 +1588,9 @@ function (_Component) {
       }) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "userHomeBottom"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(___WEBPACK_IMPORTED_MODULE_3__["MakeHabitModal"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "submit",
-        id: "submitEntriesButton"
+        type: "button",
+        id: "submitEntriesButton",
+        onClick: this.sendEntryUpdates
       }, "Submit")));
     }
   }], [{
@@ -1607,18 +1617,22 @@ var mapState = function mapState(state) {
     habits: state.habits,
     entries: state.entries
   };
-}; // const mapDispatch = dispatch => {
-//   return {
-//     updateEntries: (entries) => dispatch(updateEntries(entries))
-//   }
-// }
+};
 
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    updateEntries: function updateEntries(entries) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_4__["updateEntries"])(entries));
+    }
+  };
+};
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, mapDispatch)(UserHome));
 UserHome.propTypes = {
   user: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object,
   habits: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
-  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
+  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  updateEntries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
 };
 
 /***/ }),
@@ -2000,12 +2014,13 @@ socket.on('connect', function () {
 /*!*********************************!*\
   !*** ./client/store/entries.js ***!
   \*********************************/
-/*! exports provided: getEntries, default */
+/*! exports provided: getEntries, updateEntries, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEntries", function() { return getEntries; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateEntries", function() { return updateEntries; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2014,11 +2029,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var GOT_ENTRIES = 'GOT_ENTRIES';
+var UPDATED_ENTRIES = 'UPDATED_ENTRIES';
 var initialState = [];
 
 var gotEntries = function gotEntries(entries) {
   return {
     type: GOT_ENTRIES,
+    entries: entries
+  };
+};
+
+var updatedEntries = function updatedEntries(entries) {
+  return {
+    type: UPDATED_ENTRIES,
     entries: entries
   };
 };
@@ -2064,6 +2087,59 @@ var getEntries = function getEntries() {
     }()
   );
 };
+var updateEntries = function updateEntries(entries) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var i;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                i = 0;
+
+              case 2:
+                if (!(i < entries.length)) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _context2.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/entries/".concat(entries[i].id), entries[i]);
+
+              case 5:
+                i++;
+                _context2.next = 2;
+                break;
+
+              case 8:
+                dispatch(updatedEntries(entries));
+                _context2.next = 14;
+                break;
+
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+
+              case 14:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 11]]);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -2071,6 +2147,17 @@ var getEntries = function getEntries() {
   switch (action.type) {
     case GOT_ENTRIES:
       return action.entries;
+
+    case UPDATED_ENTRIES:
+      for (var i = 0; i < action.entries.length; i++) {
+        for (var j = 0; j < state.length; j++) {
+          if (action.entries[i].id === state[j].id) {
+            state[j].id = action.entries[i].id;
+          }
+        }
+      }
+
+      return state;
 
     default:
       return state;
@@ -2109,8 +2196,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var GOT_HABITS = 'GOT_HABITS';
-var MADE_HABIT = 'MAKE_HABIT'; // const DELETED_HABIT = 'DELETE_HABIT'
-
+var MADE_HABIT = 'MAKE_HABIT';
 var initialState = [];
 
 var gotHabits = function gotHabits(habits) {
@@ -2125,8 +2211,7 @@ var madeHabit = function madeHabit(habit) {
     type: MADE_HABIT,
     habit: habit
   };
-}; // const deletedHabit = habit => ({type: DELETED_HABIT, habit})
-
+};
 
 var getHabits = function getHabits() {
   return (
@@ -2272,7 +2357,7 @@ var deleteHabit = function deleteHabit(habitId) {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, getHabits, makeHabit, deleteHabit, getEntries */
+/*! exports provided: default, me, auth, logout, getHabits, makeHabit, deleteHabit, getEntries, updateEntries */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2299,6 +2384,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "deleteHabit", function() { return _habits__WEBPACK_IMPORTED_MODULE_5__["deleteHabit"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getEntries", function() { return _entries__WEBPACK_IMPORTED_MODULE_6__["getEntries"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "updateEntries", function() { return _entries__WEBPACK_IMPORTED_MODULE_6__["updateEntries"]; });
 
 
 

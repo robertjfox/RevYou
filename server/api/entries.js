@@ -21,16 +21,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-// router.put('/:entryId', async (req, res, next) => {
-//   try {
-//     if (req.user) {
-//       const {id, value} = req.body
-
-//     }
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.put('/:entryId', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const userId = req.user.id
+      const {id, value} = req.body
+      Entry.update({value}, {where: {id: id, userId: userId}})
+      res.sendStatus(204)
+    } else {
+      res.sendStatus(401)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 // router.post('/', async (req, res, next) => {
 //   try {

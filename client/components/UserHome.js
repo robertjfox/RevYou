@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {HabitThumb, MakeHabitModal} from './'
-// import {updateEntry} from '../store'
+import {updateEntries} from '../store'
 
 class UserHome extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class UserHome extends Component {
     }
     this.changeDate = this.changeDate.bind(this)
     this.updateHomeState = this.updateHomeState.bind(this)
+    this.sendEntryUpdates = this.sendEntryUpdates.bind(this)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -56,6 +57,11 @@ class UserHome extends Component {
     })
   }
 
+  sendEntryUpdates() {
+    const {currentEntries} = this.state
+    this.props.updateEntries(currentEntries)
+  }
+
   render() {
     console.log(this.state.currentEntries)
     const {user, habits} = this.props
@@ -94,7 +100,11 @@ class UserHome extends Component {
         </div>
         <div id="userHomeBottom">
           <MakeHabitModal />
-          <button type="submit" id="submitEntriesButton">
+          <button
+            type="button"
+            id="submitEntriesButton"
+            onClick={this.sendEntryUpdates}
+          >
             Submit
           </button>
         </div>
@@ -111,16 +121,17 @@ const mapState = state => {
   }
 }
 
-// const mapDispatch = dispatch => {
-//   return {
-//     updateEntries: (entries) => dispatch(updateEntries(entries))
-//   }
-// }
+const mapDispatch = dispatch => {
+  return {
+    updateEntries: entries => dispatch(updateEntries(entries))
+  }
+}
 
-export default connect(mapState)(UserHome)
+export default connect(mapState, mapDispatch)(UserHome)
 
 UserHome.propTypes = {
   user: PropTypes.object,
   habits: PropTypes.array,
-  entries: PropTypes.array
+  entries: PropTypes.array,
+  updateEntries: PropTypes.func
 }

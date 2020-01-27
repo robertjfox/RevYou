@@ -26,13 +26,15 @@ class Counter extends Component {
 
   handleClick(e) {
     const plusOrMinus = e.target.innerText
-    const {count} = this.state
+    const {count, entryId} = this.state
     if (plusOrMinus === '-' && count !== 0) {
+      this.props.updateHomeState(entryId, count - 1)
       this.setState({
         count: count - 1
       })
     }
     if (plusOrMinus === '+') {
+      this.props.updateHomeState(entryId, count + 1)
       this.setState({
         count: count + 1
       })

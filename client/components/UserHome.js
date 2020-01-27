@@ -2,15 +2,41 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {HabitThumb, MakeHabitModal} from './'
+// import {updateEntry} from '../store'
 
 class UserHome extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      date: new Date()
+      date: new Date(),
+      currentEntries: {}
     }
-
     this.changeDate = this.changeDate.bind(this)
+    this.updateHomeState = this.updateHomeState.bind(this)
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const {entries} = props,
+      {date} = state
+    const dateToCompare = date.toISOString().slice(0, 10)
+    const currentEntries = entries.filter(
+      entry => entry.createdAt.slice(0, 10) === dateToCompare
+    )
+    return {
+      currentEntries: currentEntries
+    }
+  }
+
+  updateHomeState(entryId, value) {
+    const entries = this.state.currentEntries
+    entries.forEach(entry => {
+      if (entry.id === entryId) {
+        entry.value = value
+      }
+    })
+    this.setState({
+      currentEntries: entries
+    })
   }
 
   changeDate(e) {
@@ -31,13 +57,10 @@ class UserHome extends Component {
   }
 
   render() {
-    const {user, habits, entries} = this.props
-    const {date} = this.state
-    const displayDate = date.toDateString()
-    const dateToCompare = date.toISOString().slice(0, 10)
-    const daysEntries = entries.filter(
-      entry => entry.createdAt.slice(0, 10) === dateToCompare
-    )
+    console.log(this.state.currentEntries)
+    const {user, habits} = this.props
+    const {date, currentEntries} = this.state
+    const displayDate = date.toDateString().slice(4)
     return (
       <div id="userHome">
         <h2 className="homePageWelcome">Welcome back, {user.firstName}</h2>
@@ -45,7 +68,7 @@ class UserHome extends Component {
           <button type="button" onClick={this.changeDate}>
             PREV
           </button>
-          <h3>{displayDate}</h3>
+          <h2>{displayDate}</h2>
           <button type="button" onClick={this.changeDate}>
             NEXT
           </button>
@@ -53,7 +76,7 @@ class UserHome extends Component {
         <div>
           {habits.length
             ? habits.map((habit, index) => {
-                let habitEntry = daysEntries.filter(
+                let habitEntry = currentEntries.filter(
                   entry => entry.habitId === habit.id
                 )
                 let entry = habitEntry[0]
@@ -63,6 +86,7 @@ class UserHome extends Component {
                     index={index}
                     habit={habit}
                     entry={entry}
+                    updateHomeState={this.updateHomeState}
                   />
                 )
               })
@@ -86,6 +110,12 @@ const mapState = state => {
     entries: state.entries
   }
 }
+
+// const mapDispatch = dispatch => {
+//   return {
+//     updateEntries: (entries) => dispatch(updateEntries(entries))
+//   }
+// }
 
 export default connect(mapState)(UserHome)
 

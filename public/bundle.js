@@ -662,7 +662,8 @@ __webpack_require__.r(__webpack_exports__);
 var HabitThumb = function HabitThumb(props) {
   var habit = props.habit,
       index = props.index,
-      entry = props.entry;
+      entry = props.entry,
+      updateHomeState = props.updateHomeState;
   var RatingType;
 
   if (habit.ratingType === 'FiveStars') {
@@ -691,7 +692,8 @@ var HabitThumb = function HabitThumb(props) {
   }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "habitRatingCont"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RatingType, {
-    entry: entry
+    entry: entry,
+    updateHomeState: updateHomeState
   })));
 };
 /* harmony default export */ __webpack_exports__["default"] = (HabitThumb);
@@ -1064,15 +1066,19 @@ function (_Component) {
     key: "handleClick",
     value: function handleClick(e) {
       var upOrDown = e.target.name;
-      var value = this.state.value;
+      var _this$state = this.state,
+          value = _this$state.value,
+          entryId = _this$state.entryId;
 
       if (upOrDown === 'down' && value !== 0) {
+        this.props.updateHomeState(entryId, value - 1);
         this.setState({
           value: value - 1
         });
       }
 
       if (upOrDown === 'up' && value !== 1) {
+        this.props.updateHomeState(entryId, value + 1);
         this.setState({
           value: value + 1
         });
@@ -1181,15 +1187,19 @@ function (_Component) {
     key: "handleClick",
     value: function handleClick(e) {
       var plusOrMinus = e.target.innerText;
-      var count = this.state.count;
+      var _this$state = this.state,
+          count = _this$state.count,
+          entryId = _this$state.entryId;
 
       if (plusOrMinus === '-' && count !== 0) {
+        this.props.updateHomeState(entryId, count - 1);
         this.setState({
           count: count - 1
         });
       }
 
       if (plusOrMinus === '+') {
+        this.props.updateHomeState(entryId, count + 1);
         this.setState({
           count: count + 1
         });
@@ -1303,6 +1313,8 @@ function (_Component) {
   _createClass(FiveStars, [{
     key: "onStarClick",
     value: function onStarClick(nextValue, prevValue, name) {
+      var entryId = this.state.entryId;
+      this.props.updateHomeState(entryId, nextValue);
       this.setState({
         rating: nextValue
       });
@@ -1474,7 +1486,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
+ // import {updateEntry} from '../store'
 
 var UserHome =
 /*#__PURE__*/
@@ -1488,13 +1500,28 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UserHome).call(this, props));
     _this.state = {
-      date: new Date()
+      date: new Date(),
+      currentEntries: {}
     };
     _this.changeDate = _this.changeDate.bind(_assertThisInitialized(_this));
+    _this.updateHomeState = _this.updateHomeState.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(UserHome, [{
+    key: "updateHomeState",
+    value: function updateHomeState(entryId, value) {
+      var entries = this.state.currentEntries;
+      entries.forEach(function (entry) {
+        if (entry.id === entryId) {
+          entry.value = value;
+        }
+      });
+      this.setState({
+        currentEntries: entries
+      });
+    }
+  }, {
     key: "changeDate",
     value: function changeDate(e) {
       var date = this.state.date;
@@ -1515,16 +1542,16 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
+      console.log(this.state.currentEntries);
       var _this$props = this.props,
           user = _this$props.user,
-          habits = _this$props.habits,
-          entries = _this$props.entries;
-      var date = this.state.date;
-      var displayDate = date.toDateString();
-      var dateToCompare = date.toISOString().slice(0, 10);
-      var daysEntries = entries.filter(function (entry) {
-        return entry.createdAt.slice(0, 10) === dateToCompare;
-      });
+          habits = _this$props.habits;
+      var _this$state = this.state,
+          date = _this$state.date,
+          currentEntries = _this$state.currentEntries;
+      var displayDate = date.toDateString().slice(4);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "userHome"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
@@ -1534,11 +1561,11 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         onClick: this.changeDate
-      }, "PREV"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, displayDate), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "PREV"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, displayDate), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         onClick: this.changeDate
       }, "NEXT")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, habits.length ? habits.map(function (habit, index) {
-        var habitEntry = daysEntries.filter(function (entry) {
+        var habitEntry = currentEntries.filter(function (entry) {
           return entry.habitId === habit.id;
         });
         var entry = habitEntry[0];
@@ -1546,7 +1573,8 @@ function (_Component) {
           key: habit.id,
           index: index,
           habit: habit,
-          entry: entry
+          entry: entry,
+          updateHomeState: _this2.updateHomeState
         });
       }) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "userHomeBottom"
@@ -1554,6 +1582,19 @@ function (_Component) {
         type: "submit",
         id: "submitEntriesButton"
       }, "Submit")));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      var entries = props.entries,
+          date = state.date;
+      var dateToCompare = date.toISOString().slice(0, 10);
+      var currentEntries = entries.filter(function (entry) {
+        return entry.createdAt.slice(0, 10) === dateToCompare;
+      });
+      return {
+        currentEntries: currentEntries
+      };
     }
   }]);
 
@@ -1566,7 +1607,12 @@ var mapState = function mapState(state) {
     habits: state.habits,
     entries: state.entries
   };
-};
+}; // const mapDispatch = dispatch => {
+//   return {
+//     updateEntries: (entries) => dispatch(updateEntries(entries))
+//   }
+// }
+
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
 UserHome.propTypes = {

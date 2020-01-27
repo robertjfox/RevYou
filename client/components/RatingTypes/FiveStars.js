@@ -24,6 +24,8 @@ class FiveStars extends Component {
   }
 
   onStarClick(nextValue, prevValue, name) {
+    const {entryId} = this.state
+    this.props.updateHomeState(entryId, nextValue)
     this.setState({rating: nextValue})
   }
 

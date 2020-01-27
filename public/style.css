@@ -295,11 +295,9 @@ button:hover {
 .ratingBinary {
   display: flex;
   justify-content: space-between;
-  width: 45%;
-}
-
-.ratingBinary input {
-  width: 40px;
+  min-width: 100px;
+  width: 50%;
+  max-width: 200px;
 }
 
 .fiveStarsCharacter {

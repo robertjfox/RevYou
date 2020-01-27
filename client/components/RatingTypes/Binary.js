@@ -26,13 +26,15 @@ class Binary extends Component {
 
   handleClick(e) {
     const upOrDown = e.target.name
-    const {value} = this.state
+    const {value, entryId} = this.state
     if (upOrDown === 'down' && value !== 0) {
+      this.props.updateHomeState(entryId, value - 1)
       this.setState({
         value: value - 1
       })
     }
     if (upOrDown === 'up' && value !== 1) {
+      this.props.updateHomeState(entryId, value + 1)
       this.setState({
         value: value + 1
       })

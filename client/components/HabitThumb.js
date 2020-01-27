@@ -4,7 +4,7 @@ import {FiveStars, Counter, Binary} from './'
 import {Link} from 'react-router-dom'
 
 export const HabitThumb = props => {
-  const {habit, index, entry} = props
+  const {habit, index, entry, updateHomeState} = props
   let RatingType
 
   if (habit.ratingType === 'FiveStars') {
@@ -27,7 +27,7 @@ export const HabitThumb = props => {
         </Link>
       </div>
       <div id="habitRatingCont">
-        <RatingType entry={entry} />
+        <RatingType entry={entry} updateHomeState={updateHomeState} />
       </div>
     </div>
   )

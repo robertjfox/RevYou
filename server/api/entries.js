@@ -21,6 +21,17 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// router.put('/:entryId', async (req, res, next) => {
+//   try {
+//     if (req.user) {
+//       const {id, value} = req.body
+
+//     }
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
 // router.post('/', async (req, res, next) => {
 //   try {
 //     if (req.user) {

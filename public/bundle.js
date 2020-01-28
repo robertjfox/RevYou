@@ -813,8 +813,15 @@ var customStyles = {
   content: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundImage: 'linear-gradient(to bottom right, rgb(29, 29, 108),rgb(3, 3, 36)',
+    backgroundImage: 'url(/backgroundGradient.jpg)',
+    backgroundSize: '100% 100%',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center',
+    width: '30vw',
+    minWidth: '220px',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -1087,8 +1094,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1167,12 +1172,12 @@ function (_Component) {
         name: "down",
         onClick: this.handleClick,
         className: className0
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", _defineProperty({
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/icons/thumbsUp.png",
         name: "up",
-        className: "selectedThumb",
-        onClick: this.handleClick
-      }, "className", className1)));
+        onClick: this.handleClick,
+        className: className1
+      }));
     }
   }], [{
     key: "getDerivedStateFromProps",

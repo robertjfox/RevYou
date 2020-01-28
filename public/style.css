@@ -330,6 +330,7 @@ button:hover {
 .modalForm {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
   height: 90%;
 }
@@ -340,7 +341,7 @@ button:hover {
 }
 
 .modalForm input {
-  width: 163px;
+  width: 25vw;
   height: 18px;
   margin-bottom: 20px;
   font-size: 15px;
@@ -349,7 +350,7 @@ button:hover {
 }
 
 .modalForm select {
-  width: 180px;
+  width: 25vw;
   height: 30px;
   margin-bottom: 20px;
   font-size: 15px;
@@ -365,7 +366,8 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50vw;
+  width: 25vw;
+  min-width: 250px;
   margin-top: -20px;
   animation-name: fadeInDeleteHabit;
   animation-duration: 1s;

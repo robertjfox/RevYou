@@ -8,9 +8,15 @@ const customStyles = {
   content: {
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundImage:
-      'linear-gradient(to bottom right, rgb(29, 29, 108),rgb(3, 3, 36)',
+    backgroundImage: 'url(/backgroundGradient.jpg)',
+    backgroundSize: '100% 100%',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center',
+    width: '30vw',
+    minWidth: '220px',
     top: '50%',
     left: '50%',
     right: 'auto',

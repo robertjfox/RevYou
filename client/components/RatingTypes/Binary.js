@@ -60,7 +60,6 @@ class Binary extends Component {
         <img
           src="/icons/thumbsUp.png"
           name="up"
-          className="selectedThumb"
           onClick={this.handleClick}
           className={className1}
         />

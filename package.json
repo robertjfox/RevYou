@@ -44,7 +44,7 @@
     "@nivo/bar": "^0.61.1",
     "@nivo/calendar": "^0.61.1",
     "@nivo/pie": "^0.61.1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "express": "^4.16.4",
